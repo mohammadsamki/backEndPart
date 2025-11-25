@@ -46,3 +46,31 @@ export const loginUser = async (req ,res)=>{
         
     }
 }
+export const getAllUsers = async  (req,res) =>{
+
+    try {
+        const users = await User.find({})
+        res.status(200).json({users:users});
+        
+    } catch (error) {
+        res.status(500).json({message:error.message});
+        
+    }
+    
+}
+//  search user by name or email  and id 
+export const searchUsers = async (req,res)=>{
+    const {name}= req.body;
+
+    try {
+        const users = await User.find({name:name})
+        if (users.length < 1 ){
+            res.status(404).json({message:"No users found"});
+        }
+        res.status(200).json({users:users});
+        
+    } catch (error) {
+        res.status(500).json({message:error.message});
+        
+    }
+}
